@@ -1,14 +1,58 @@
-<a href="/">Home</a>
-<a href="/about/">About</a>
-<a href="/blog/">blog</a>
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+const pageTitle = "About me";
 
+const identity = {
+    firstName: "Oscar",
+    country: "Spain",
+    occupation: "Learning",
+    hobbies: ["chess", "reading", "philosophy"],
+};
+
+const skills = ["HTML", "CSS", "JavaScript", "Vue", "Teaching", "PHP"];
+const goal = 5;
+
+const skillColor = "navy";
+---
+
+<title>{pageTitle}</title>
+
+<Header />
 <body>
     <h1>Sobre la página:</h1>
     <h2>Desarrollada en astro</h2>
 
     <p>
-        La temática de la misma es toda clase de "crímenes" cometidos por informáticos
-        (especialmente desarrolladores)
+        La temática de la misma es toda clase de "crímenes" cometidos por
+        informáticos (especialmente desarrolladores)
     </p>
     <p>en algunos casos se abordaran pautas para que no vuelvan a producirse</p>
+    <p>My skills are:</p>
+    <ul>
+        {skills.map((skill) => <li class="skill">{skill}</li>)}
+    </ul>
+    {
+        goal === 3 ? (
+            <p>My goal is to finish in 3 days.</p>
+        ) : (
+            <p>My goal is {goal} days.</p>
+        )
+    }
+    <Footer />
+    <script>
+        import "../scripts/menu.js";
+    </script>
 </body>
+<style define:vars={{ skillColor }}>
+    h1 {
+        color: purple;
+        font-size: 4rem;
+    }
+    .skill {
+        /*color: green;*/
+        color: var(--skillColor);
+        font-weight: bold;
+    }
+</style>
