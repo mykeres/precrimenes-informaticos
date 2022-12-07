@@ -1,26 +1,31 @@
 ---
-import BaseLayout from "./BaseLayout.astro";
-const { frontmatter } = Astro.props;
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Greeting from '../../components/Greeting.jsx';
+
+const pageTitle = "Tag Index";
+
+const allPosts = await Astro.glob("../posts/*.md");
+const tags = [...new Set(allPosts.map((post) => post.frontmatter.tags).flat())];
 ---
 
-<BaseLayout pageTitle={frontmatter.title}>
-    <p>Written by {frontmatter.author}</p>
+<BaseLayout pageTitle={pageTitle}>
     <div class="tags">
         {
-            frontmatter.tags.map((tag) => (
+            tags.map((tag) => (
                 <p class="tag">
                     <a href={`/tags/${tag}`}>{tag}</a>
                 </p>
             ))
         }
     </div>
-    <slot />
+    <Greeting messages={["Hi", "Hello", "Howdy", "Hey there"]} />
+    <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
 </BaseLayout>
 <style>
     a {
       color: #00539F;
     }
-              
+          
     .tags {
       display: flex; 
       flex-wrap: wrap; 
